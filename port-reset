@@ -1,0 +1,11 @@
+event manager applet PORT_RESET
+ event syslog pattern "LINEPROTO-5-UPDOWN: Line protocol on Interface.*GigabitEthernet.*changed state to down"
+ action 10.0 regexp "GigabitEthernet([0-9/\.:]+)" "$_syslog_msg" ifname
+ action 20.0 wait 10
+ action 30.0 cli command "enable"
+ action 40.0 cli command "conf t"
+ action 50.0 cli command "int $ifname"
+ action 60.0 cli command "shut"
+ action 70.0 cli command "no shu"
+ action 80.0 cli command "end"
+ action 90.0 cli command "exit"
